@@ -21,7 +21,7 @@ import com.example.unknown.inventoryappstage1.data.ItemEntries.*;
 public class EditorActivity extends AppCompatActivity {
 
     private EditText mNameEdit, mPriceEdit, mQuantityEdit, mSupplierEdit, mMobileEdit;
-    private int mQuantity;
+    private int mQuantity = ItemEntry.QUANTITY_OUTSTOCK;
     private Spinner mSpinner;
 
     @Override
@@ -33,6 +33,7 @@ public class EditorActivity extends AppCompatActivity {
         mPriceEdit = (EditText) findViewById(R.id.edit_price);
         mSupplierEdit = (EditText) findViewById(R.id.edit_supplier);
         mMobileEdit = (EditText) findViewById(R.id.edit_mobile);
+        mSpinner = (Spinner) findViewById(R.id.spinner_quantity);
 
         setupSpinner();
     }
@@ -55,7 +56,8 @@ public class EditorActivity extends AppCompatActivity {
                         mQuantity = ItemEntry.QUANTITY_INSTOCK;
                     } else if (selection.equals(getString(R.string.quantity_out_of_stock))) {
                         mQuantity = ItemEntry.QUANTITY_OUTSTOCK;
-                    }
+                    } else
+                        mQuantity = ItemEntry.QUANTITY_OUTSTOCK;
                 }
             }
 
@@ -93,17 +95,15 @@ public class EditorActivity extends AppCompatActivity {
     private void insertItem() {
         String nameString = mNameEdit.getText().toString().trim();
         String priceString = mPriceEdit.getText().toString().trim();
-        String quantityString = mQuantityEdit.getText().toString().trim();
         String supplierString = mSupplierEdit.getText().toString().trim();
         String mobileString = mMobileEdit.getText().toString().trim();
-        int quantity = Integer.parseInt(quantityString);
 
         ItemDbHelper mDbHelper = new ItemDbHelper(this);
         SQLiteDatabase db = mDbHelper.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(ItemEntry.COLUMN_ITEM_NAME, nameString);
         values.put(ItemEntry.COLUMN_ITEM_PRICE, priceString);
-        values.put(ItemEntry.COLUMN_ITEM_QUANTITY, quantity);
+        values.put(ItemEntry.COLUMN_ITEM_QUANTITY, mQuantity);
         values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_NAME, supplierString);
         values.put(ItemEntry.COLUMN_ITEM_MOBILE, mobileString);
 

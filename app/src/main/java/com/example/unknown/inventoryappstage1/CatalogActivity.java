@@ -53,7 +53,7 @@ public class CatalogActivity extends AppCompatActivity {
 
         ContentValues values = new ContentValues();
         values.put(ItemEntry.COLUMN_ITEM_NAME, "Nokia X6");
-        values.put(ItemEntry.COLUMN_ITEM_PRICE, 1500);
+        values.put(ItemEntry.COLUMN_ITEM_PRICE, 15999);
         values.put(ItemEntry.COLUMN_ITEM_QUANTITY, ItemEntry.QUANTITY_INSTOCK);
         values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_NAME, "Unknown");
         values.put(ItemEntry.COLUMN_ITEM_MOBILE, "98765432");
@@ -70,8 +70,7 @@ public class CatalogActivity extends AppCompatActivity {
                 ItemEntry.COLUMN_ITEM_NAME,
                 ItemEntry.COLUMN_ITEM_PRICE,
                 ItemEntry.COLUMN_ITEM_QUANTITY,
-                ItemEntry.COLUMN_ITEM_SUPPLIER_NAME,
-                ItemEntry.COLUMN_ITEM_MOBILE};
+                ItemEntry.COLUMN_ITEM_SUPPLIER_NAME};
 
         Cursor c = db.query(
                 ItemEntry.TABLE_NAME,

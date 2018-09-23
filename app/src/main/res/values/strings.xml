@@ -2,9 +2,4 @@
     <string name="app_name">Inventory App Stage 1</string>
     <string name="quantity_instock">Instock</string>
     <string name="quantity_out_of_stock">Out of stock</string>
-
-    <array name="quantity_options">
-        <item>"Instock"</item>
-        <item>Out of stock</item>
-    </array>
 </resources>
