@@ -1,5 +1,6 @@
 package com.example.unknown.inventoryappstage1;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -7,6 +8,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
@@ -30,7 +32,6 @@ public class CatalogActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
         mDbHelper = new ItemDbHelper(this);
         displayDataBaseInfo();
     }
@@ -40,8 +41,28 @@ public class CatalogActivity extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.menu_catalog, menu);
         return true;
     }
-    
-    private void displayDataBaseInfo(){
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        displayDataBaseInfo();
+    }
+
+    private void insertItem() {
+        SQLiteDatabase db = mDbHelper.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        values.put(ItemEntry.COLUMN_ITEM_NAME, "Nokia X6");
+        values.put(ItemEntry.COLUMN_ITEM_PRICE, 1500);
+        values.put(ItemEntry.COLUMN_ITEM_QUANTITY, ItemEntry.QUANTITY_INSTOCK);
+        values.put(ItemEntry.COLUMN_ITEM_SUPPLIER_NAME, "Unknown");
+        values.put(ItemEntry.COLUMN_ITEM_MOBILE, "98765432");
+
+        long newRowId = db.insert(ItemEntry.TABLE_NAME, null, values);
+
+    }
+
+    private void displayDataBaseInfo() {
         SQLiteDatabase db = mDbHelper.getReadableDatabase();
 
         String[] projection = {
@@ -50,8 +71,7 @@ public class CatalogActivity extends AppCompatActivity {
                 ItemEntry.COLUMN_ITEM_PRICE,
                 ItemEntry.COLUMN_ITEM_QUANTITY,
                 ItemEntry.COLUMN_ITEM_SUPPLIER_NAME,
-                ItemEntry.COLUMN_ITEM_MOBILE
-        };
+                ItemEntry.COLUMN_ITEM_MOBILE};
 
         Cursor c = db.query(
                 ItemEntry.TABLE_NAME,
@@ -70,7 +90,7 @@ public class CatalogActivity extends AppCompatActivity {
             displayView.append(ItemEntry._ID + " - "
                     + ItemEntry.COLUMN_ITEM_NAME + "-"
                     + ItemEntry.COLUMN_ITEM_PRICE + "-"
-                    +  ItemEntry.COLUMN_ITEM_QUANTITY + "-"
+                    + ItemEntry.COLUMN_ITEM_QUANTITY + "-"
                     + ItemEntry.COLUMN_ITEM_SUPPLIER_NAME + "-"
                     + ItemEntry.COLUMN_ITEM_MOBILE + "\n");
 
@@ -84,8 +104,8 @@ public class CatalogActivity extends AppCompatActivity {
             while (cursor.moveToNext()) {
                 int currentID = cursor.getInt(idColumnIndex);
                 String currentName = cursor.getString(nameColumnIndex);
-                String currentPrice = cursor.getString(priceColumnIndex);
-                String currentQuantity = cursor.getString(quantityColumnIndex);
+                int currentPrice = cursor.getInt(priceColumnIndex);
+                int currentQuantity = cursor.getInt(quantityColumnIndex);
                 String currentSupplier = cursor.getString(supplierColumnIndex);
                 String currentMobile = cursor.getString(mobileColumnIndex);
                 displayView.append("\n" + currentID + " - " +
@@ -94,5 +114,18 @@ public class CatalogActivity extends AppCompatActivity {
         } finally {
             cursor.close();
         }
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.action_insert_dummy_data:
+                insertItem();
+                displayDataBaseInfo();
+                return true;
+            case R.id.action_delete_all_entries:
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

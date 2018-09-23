@@ -13,5 +13,8 @@ public class ItemEntries implements BaseColumns {
         public static final String COLUMN_ITEM_QUANTITY = "quantity";
         public static final String COLUMN_ITEM_SUPPLIER_NAME = "supplier";
         public static final String COLUMN_ITEM_MOBILE = "mobile";
+
+        public static final int QUANTITY_INSTOCK = 0;
+        public static final int QUANTITY_OUTSTOCK = 1;
     }
 }
