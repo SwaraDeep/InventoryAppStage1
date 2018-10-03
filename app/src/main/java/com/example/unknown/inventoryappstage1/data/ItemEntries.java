@@ -1,10 +1,19 @@
 package com.example.unknown.inventoryappstage1.data;
 
+import android.net.Uri;
 import android.provider.BaseColumns;
 
-public class ItemEntries implements BaseColumns {
+public final class ItemEntries {
+    private ItemEntries() {
+    }
 
-    public final class ItemEntry{
+    public static final String CONTENT_AUTHORITY = "com.example.android.items";
+    public static final Uri BASE_CONTENT_URI = Uri.parse("content://" + CONTENT_AUTHORITY);
+    public static final String PATH_ITEMS = "items";
+
+
+    public static final class ItemEntry implements BaseColumns {
+        public static final Uri CONTENT_URI = Uri.withAppendedPath(BASE_CONTENT_URI, PATH_ITEMS);
         public static final String TABLE_NAME = "items";
         public static final String _ID = BaseColumns._ID;
 

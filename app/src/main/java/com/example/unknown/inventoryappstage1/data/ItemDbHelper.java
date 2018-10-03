@@ -7,14 +7,14 @@ import android.util.Log;
 
 import com.example.unknown.inventoryappstage1.data.ItemEntries.*;
 
-public class ItemDbHelper extends SQLiteOpenHelper{
+public class ItemDbHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "shelter.db";
     private static final int DATABASE_VERSION = 1;
 
-    public ItemDbHelper(Context context){
+    public ItemDbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        }
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
@@ -23,7 +23,7 @@ public class ItemDbHelper extends SQLiteOpenHelper{
 
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
-        String SQL_CREATE_ITEMS_TABLE =  "CREATE TABLE " + ItemEntry.TABLE_NAME + " ("
+        String SQL_CREATE_ITEMS_TABLE = "CREATE TABLE " + ItemEntry.TABLE_NAME + " ("
                 + ItemEntry._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + ItemEntry.COLUMN_ITEM_NAME + " TEXT NOT NULL, "
                 + ItemEntry.COLUMN_ITEM_PRICE + " INTEGER NOT NULL, "
